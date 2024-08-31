@@ -4,7 +4,6 @@ import Header from '../../Header';
 import { Avatar } from '@mui/material';
 import { Person, DateRange, Category, Tag } from '@mui/icons-material';
 
-// Fetch post data
 async function fetchPost(id) {
   const res = await fetch(`http://localhost:8000/api/blog/${id}/`, { next: { revalidate: 10 } });
   const post = await res.json();
@@ -39,7 +38,6 @@ const PostDetailPage = async ({ params }) => {
           </div>
         </div>
 
-        {/* نمایش سایر جزئیات پست */}
         <div className="bg-gray-100 rounded-lg p-6 shadow-inner">
           <h2 className="text-2xl font-semibold mb-4">Post Details</h2>
           <div className="flex items-center space-x-2 mb-2">

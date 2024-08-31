@@ -1,4 +1,3 @@
-// src/components/Header.jsx
 import React from 'react';
 
 const Header = () => {
@@ -8,9 +7,7 @@ const Header = () => {
         <h1 className="text-2xl font-bold">My Blog</h1>
         <nav>
           <ul className="flex space-x-4">
-            <li><a href="/blog" className="hover:underline">Blog</a></li>
-            <li><a href="/" className="hover:underline">Home</a></li>
-          </ul>
+            <li><a href="/blog" className="hover:underline">Blog</a></li>          </ul>
         </nav>
       </div>
     </header>
