@@ -6,6 +6,7 @@ import Header from '../Header';
 
 const BlogPage = () => {
   const [blogs, setBlogs] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 6; 
 
@@ -23,12 +24,16 @@ const BlogPage = () => {
     fetchBlogs();
   }, []);
 
+  const filteredBlogs = blogs.filter((blog) =>
+    blog.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-  const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog);
+  const currentBlogs = filteredBlogs.slice(indexOfFirstBlog, indexOfLastBlog);
 
   const handleNextPage = () => {
-    if (currentPage < Math.ceil(blogs.length / blogsPerPage)) {
+    if (currentPage < Math.ceil(filteredBlogs.length / blogsPerPage)) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -40,7 +45,7 @@ const BlogPage = () => {
   };
 
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(blogs.length / blogsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(filteredBlogs.length / blogsPerPage); i++) {
     pageNumbers.push(i);
   }
 
@@ -48,7 +53,18 @@ const BlogPage = () => {
     <>
       <Header />
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6 text-center">Our Latest Blogs</h1>
+        <h1 className="text-3xl font-bold mb-4 text-center">Our Latest Blogs</h1>
+
+        <div className="flex justify-center mb-6">
+          <input
+            type="text"
+            placeholder="Search for blogs..."
+            className="border px-4 py-2 rounded shadow-md w-full max-w-md"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {currentBlogs.map((blog) => (
             <div key={blog.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 ease-in-out">
@@ -92,8 +108,8 @@ const BlogPage = () => {
 
           <button
             onClick={handleNextPage}
-            disabled={currentPage === Math.ceil(blogs.length / blogsPerPage)}
-            className={`px-4 py-2 ${currentPage === Math.ceil(blogs.length / blogsPerPage) ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded`}
+            disabled={currentPage === Math.ceil(filteredBlogs.length / blogsPerPage)}
+            className={`px-4 py-2 ${currentPage === Math.ceil(filteredBlogs.length / blogsPerPage) ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded`}
           >
             Next
           </button>
