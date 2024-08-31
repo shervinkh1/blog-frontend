@@ -46,7 +46,7 @@ const PostDetailPage = async ({ params }) => {
           </div>
           <div className="flex items-center space-x-2">
             <Tag fontSize="small" />
-            <p className="text-gray-700">Tags: {post.tags ? post.tags.join(', ') : 'No tags'}</p>
+            <p className="text-gray-700">Tags: {post.tags ? post.tags : 'No tags'}</p>
           </div>
         </div>
       </div>
